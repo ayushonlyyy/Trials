@@ -7,6 +7,8 @@
 const ROLES = ['Primary Rusher','Secondary Rusher','IGL (In-Game Leader)','Sniper','Support','Nader (Grenadier)','Flanker','Fragger','Assaulter','Scout','Anchor','Flex Player'];
 const TEAMS = Array.from({ length: 10 }, (_, i) => 'Team ' + (i + 1));
 const GAME_EXP = ['Less than 1 year','1 year','2 years','3 years','4 years','5 years','6+ years'];
+const RAM = ['4 GB','6 GB','8 GB','12 GB'];
+const AGE_DOCS = ['School/College ID','Aadhaar card'];
 const ESPORTS_EXP = ['No experience','Less than 1 year','1 year','2 years','3 years','4+ years'];
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -33,13 +35,13 @@ function readCommon(d) {
   };
 }
 
-function commonValid(c) {
+function commonValid(c, teamOptional) {
   const age = Number(c.age);
   return (
     c.realName.length >= 2 && c.ign.length >= 1 &&
     /^\d{8,14}$/.test(c.uid) &&
     Number.isInteger(age) && age >= 5 && age <= 60 &&
-    TEAMS.includes(c.team) &&
+    ((teamOptional && c.team === '') || TEAMS.includes(c.team)) &&
     c.roles.length >= 1 && c.roles.length <= 2 &&
     /^\+?\d{10,14}$/.test(c.whatsapp.replace(/[\s-]/g, '')) &&
     c.insta.length >= 2 && c.discord.length >= 2
@@ -101,13 +103,17 @@ async function handleJoin(request, env) {
   const gameExp = str(d.gameExp, 30);
   const esportsExp = str(d.esportsExp, 30);
   const ageVerified = str(d.ageVerified, 3);
+  const ram = str(d.ram, 6);
+  const ageDoc = ageVerified === 'Yes' ? str(d.ageDoc, 30) : '';
 
   const valid =
-    commonValid(c) &&
+    commonValid(c, true) &&
     device.length >= 2 &&
+    RAM.includes(ram) &&
     GAME_EXP.includes(gameExp) &&
     ESPORTS_EXP.includes(esportsExp) &&
     (ageVerified === 'Yes' || ageVerified === 'No') &&
+    (ageVerified === 'No' || AGE_DOCS.includes(ageDoc)) &&
     d.agree === true;
 
   if (!valid) return json({ ok: false, error: 'Invalid data' }, 400);
@@ -119,14 +125,15 @@ async function handleJoin(request, env) {
     'UID: <code>' + esc(c.uid) + '</code>\n' +
     'Age: ' + esc(c.age) + '\n' +
     'Device: ' + esc(device) + '\n' +
-    'Team: ' + esc(c.team) + '\n' +
+    'RAM: ' + esc(ram) + '\n' +
+    'Team: ' + (c.team ? esc(c.team) : 'Skipped (not added to any group)') + '\n' +
     'Role: ' + esc(c.roles.join(', ')) + '\n' +
     'Game experience: ' + esc(gameExp) + '\n' +
     'eSports experience: ' + esc(esportsExp) + '\n' +
     'WhatsApp: ' + esc(c.whatsapp) + '\n' +
     'Instagram: ' + esc(c.insta) + '\n' +
     'Discord: ' + esc(c.discord) + '\n' +
-    'Age verified: ' + esc(ageVerified) + '\n' +
+    'Age verified: ' + (ageVerified === 'Yes' ? 'Yes (' + esc(ageDoc) + ')' : 'No - verify DOB with @ryukonly') + '\n' +
     'Conduct agreement accepted: Yes';
 
   return sendTelegram(env, text);
