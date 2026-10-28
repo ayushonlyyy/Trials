@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="Free Fire player trials form for BONTEN eSports.">
+<title>Trials Form | BONTEN eSports</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23000'/%3E%3Ctext x='16' y='24' font-size='24' font-weight='900' text-anchor='middle' fill='%23fff' font-family='Arial'%3EB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
+<style>
+:root{--fg:#fff;--mut:#8f8f8f;--line:#2b2b2b;--under:#4a4a4a}
+*{box-sizing:border-box}
+html{background:#000;color-scheme:dark}
+body{margin:0;background:#000;color:var(--fg);font-family:'Archivo','Helvetica Neue',Arial,sans-serif;font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.bar{position:fixed;top:0;left:0;height:3px;width:0;background:#fff;z-index:20;transition:width .35s ease}
+
+.wrap{display:grid;grid-template-columns:minmax(340px,5fr) 7fr;min-height:100vh}
+aside{position:sticky;top:0;height:100vh;padding:48px 48px 40px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid var(--line)}
+.frame{width:112px;height:112px;border:1px solid #fff;display:grid;place-items:center;overflow:hidden;color:var(--mut);font-size:13px}
+.frame img{width:100%;height:100%;object-fit:contain;padding:14px;display:block}
+
+h1{margin:0;font-weight:900;font-stretch:62%;font-size:clamp(110px,13.5vw,210px);line-height:.8;letter-spacing:-.01em;font-family:'Archivo','Arial Narrow',Impact,sans-serif}
+.ln{display:block;overflow:hidden;padding-top:.04em}
+.ln>span{display:block;animation:up .9s cubic-bezier(.2,.75,.1,1) both}
+.ln:nth-child(2)>span{animation-delay:.1s}
+@keyframes up{from{transform:translateY(105%)}to{transform:none}}
+
+.lead{margin:28px 0 0;max-width:30ch;color:#cfcfcf;font-size:17px}
+.meta{border-top:1px solid var(--line);padding-top:18px;font-size:14px;color:var(--mut)}
+.meta b{color:#fff;font-weight:600}
+
+main{padding:56px 64px 80px;max-width:800px;width:100%}
+.grp{border-top:1px solid var(--line);padding:34px 0 6px}
+.grp:first-of-type{border-top:0;padding-top:0}
+.grp h2{margin:0 0 4px;font-size:24px;font-weight:700;letter-spacing:-.01em}
+.grp .note{margin:0 0 30px;color:var(--mut);font-size:14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;column-gap:32px}
+.field{position:relative;margin:0 0 28px;min-width:0}
+.full{grid-column:1/-1}
+
+label,.lbl{display:block;margin:0 0 2px;color:var(--mut);font-size:13px;font-weight:500;transition:color .15s}
+.field:focus-within>label,.field:focus-within>.lbl{color:#fff}
+input[type=text],input[type=number],input[type=tel],select,summary{display:block;width:100%;min-height:50px;margin:0;padding:10px 0 11px;font:inherit;font-size:18px;color:#fff;background:transparent;border:0;border-bottom:1px solid var(--under);border-radius:0;transition:border-color .15s,box-shadow .15s}
+input::placeholder{color:#5c5c5c}
+input:focus,select:focus,summary:focus,details[open]>summary{outline:none;border-bottom-color:#fff;box-shadow:0 1px 0 #fff}
+input[type=number]{-moz-appearance:textfield}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+select,summary{-webkit-appearance:none;appearance:none;cursor:pointer;padding-right:30px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1.5l6 6 6-6' fill='none' stroke='%23fff' stroke-width='1.8'/%3E%3C/svg%3E") no-repeat right 2px center}
+select:invalid{color:#5c5c5c}
+select option{background:#000;color:#fff}
+
+details{position:relative}
+summary{list-style:none;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+summary::-webkit-details-marker{display:none}
+.ph{color:#5c5c5c}
+.chip{border:1px solid #fff;padding:1px 11px;font-size:14px;line-height:1.6;border-radius:99px}
+.panel{position:absolute;left:0;right:0;z-index:6;margin-top:6px;background:#000;border:1px solid #fff;max-height:310px;overflow:auto}
+.opt{display:flex;align-items:center;gap:14px;margin:0;padding:13px 16px;color:#fff;font-size:16px;font-weight:500;cursor:pointer;border-bottom:1px solid var(--line)}
+.opt:last-child{border-bottom:0}
+.opt:hover{background:#141414}
+.opt.off{opacity:.3;cursor:not-allowed}
+.opt input{-webkit-appearance:none;appearance:none;flex:none;width:20px;height:20px;margin:0;border:1px solid #777;background:transparent center/12px no-repeat;border-radius:3px}
+.opt input:checked{background-color:#fff;border-color:#fff;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='10' viewBox='0 0 12 10'%3E%3Cpath d='M1 5l3.5 3.5L11 1.5' fill='none' stroke='%23000' stroke-width='2'/%3E%3C/svg%3E")}
+.opt input:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+.err{display:none;margin:8px 0 0;font-size:13px;font-weight:500;color:#fff}
+.err::before{content:"";display:inline-block;width:7px;height:7px;background:#fff;margin-right:8px}
+.bad .err{display:block}
+.bad input,.bad select,.bad summary{border-bottom-color:#fff;border-bottom-style:dashed}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.send{display:block;width:100%;min-height:62px;margin-top:14px;border:1px solid #fff;background:#fff;color:#000;font:700 17px 'Archivo',Arial,sans-serif;cursor:pointer;transition:background .15s,color .15s}
+.send:hover{background:#000;color:#fff}
+.send:focus-visible{outline:2px solid #fff;outline-offset:4px}
+.send:disabled{opacity:.5;cursor:progress}
+.status{margin:16px 0 0;min-height:1.5em;font-size:14px;color:#cfcfcf}
+
+.done{display:none}
+.done h2{margin:0 0 14px;font-weight:900;font-stretch:62%;font-size:clamp(64px,9vw,110px);line-height:.85}
+.done>p{margin:0 0 36px;color:#cfcfcf;font-size:18px;max-width:34ch}
+dl{margin:0;border-top:1px solid var(--line)}
+dl div{display:flex;justify-content:space-between;gap:20px;padding:14px 0;border-bottom:1px solid var(--line)}
+dt{color:var(--mut)}
+dd{margin:0;font-weight:600;text-align:right;overflow-wrap:anywhere}
+body.sent form{display:none}
+body.sent .done{display:block}
+
+@media (max-width:900px){
+  .wrap{display:block}
+  aside{position:static;height:auto;padding:30px 22px 26px;border-right:0;border-bottom:1px solid var(--line);gap:34px}
+  h1{font-size:clamp(104px,34vw,190px)}
+  .lead{margin-top:22px}
+  main{padding:34px 22px 64px}
+  .grid{display:block}
+}
+@media (prefers-reduced-motion:reduce){.ln>span{animation:none}.bar,*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="bar" id="bar"></div>
+<div class="wrap">
+  <aside>
+    <div class="frame"><img src="logo.png" alt="BONTEN eSports logo" onerror="this.remove()"></div>
+    <div>
+      <h1 aria-label="Trials Form"><span class="ln"><span>Trials</span></span><span class="ln"><span>Form</span></span></h1>
+      <p class="lead">Free Fire player trials for BONTEN eSports. Fill every field, then send.</p>
+    </div>
+    <div class="meta"><b id="count">0 of 10</b> fields done</div>
+  </aside>
+
+  <main>
+    <form id="f" novalidate>
+      <section class="grp">
+        <h2>Player</h2>
+        <p class="note">Details exactly as they appear in your Free Fire profile.</p>
+        <div class="grid">
+          <div class="field" data-f="realName">
+            <label for="realName">Real name</label>
+            <input id="realName" name="realName" type="text" maxlength="60" autocomplete="name" placeholder="Full name">
+            <p class="err">Enter your real name.</p>
+          </div>
+          <div class="field" data-f="ign">
+            <label for="ign">In-game name</label>
+            <input id="ign" name="ign" type="text" maxlength="40" autocomplete="off" placeholder="Name in Free Fire">
+            <p class="err">Enter your in-game name.</p>
+          </div>
+          <div class="field" data-f="uid">
+            <label for="uid">UID</label>
+            <input id="uid" name="uid" type="text" inputmode="numeric" maxlength="14" autocomplete="off" placeholder="Numbers only">
+            <p class="err">UID is 8 to 14 digits, numbers only.</p>
+          </div>
+          <div class="field" data-f="age">
+            <label for="age">Age</label>
+            <input id="age" name="age" type="number" inputmode="numeric" min="5" max="60" autocomplete="off" placeholder="Years">
+            <p class="err">Enter a valid age.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="grp">
+        <h2>Team and role</h2>
+        <p class="note">The team BONTEN placed you in, and what you play. Pick up to 2 roles.</p>
+        <div class="grid">
+          <div class="field" data-f="team">
+            <label for="team">Team</label>
+            <select id="team" name="team" required>
+              <option value="" selected disabled hidden>Select team</option>
+              <option>Team 1</option><option>Team 2</option><option>Team 3</option><option>Team 4</option><option>Team 5</option>
+              <option>Team 6</option><option>Team 7</option><option>Team 8</option><option>Team 9</option><option>Team 10</option>
+            </select>
+            <p class="err">Select your team.</p>
+          </div>
+          <div class="field" data-f="role">
+            <span class="lbl" id="roleLbl">Role</span>
+            <details id="roleBox">
+              <summary id="roleSum" aria-labelledby="roleLbl"><span class="ph">Select up to 2</span></summary>
+              <div class="panel" id="rolePanel"></div>
+            </details>
+            <p class="err">Select 1 or 2 roles.</p>
+          </div>
+          <div class="field full" data-f="igl">
+            <label for="igl">IGL name</label>
+            <input id="igl" name="igl" type="text" maxlength="40" autocomplete="off" placeholder="Your in-game leader">
+            <p class="err">Enter your IGL name.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="grp">
+        <h2>Contact</h2>
+        <p class="note">This is how we reach you, so check each one before sending.</p>
+        <div class="grid">
+          <div class="field full" data-f="whatsapp">
+            <label for="whatsapp">WhatsApp number</label>
+            <input id="whatsapp" name="whatsapp" type="tel" inputmode="tel" maxlength="16" autocomplete="tel" placeholder="10 digit number">
+            <p class="err">Enter a valid WhatsApp number.</p>
+          </div>
+          <div class="field" data-f="insta">
+            <label for="insta">Instagram id</label>
+            <input id="insta" name="insta" type="text" maxlength="40" autocomplete="off" autocapitalize="off" placeholder="@username">
+            <p class="err">Enter your Instagram id.</p>
+          </div>
+          <div class="field" data-f="discord">
+            <label for="discord">Discord id</label>
+            <input id="discord" name="discord" type="text" maxlength="40" autocomplete="off" autocapitalize="off" placeholder="username">
+            <p class="err">Enter your Discord id.</p>
+          </div>
+        </div>
+      </section>
+
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="send" id="btn" type="submit">Send trials form</button>
+      <p class="status" id="status" role="status" aria-live="polite"></p>
+    </form>
+
+    <div class="done" id="done">
+      <h2>Form sent</h2>
+      <p>Your trials form has reached BONTEN eSports. Keep your WhatsApp on.</p>
+      <dl id="recap"></dl>
+    </div>
+  </main>
+</div>
+
+<script>
+(function(){
+  var ROLES=['Rusher','Entry Fragger','Support','Sniper','Scout','Flanker','Defender','IGL','All-rounder'];
+  var MAX=2;
+  var f=document.getElementById('f'), btn=document.getElementById('btn'), st=document.getElementById('status');
+  var box=document.getElementById('roleBox'), sum=document.getElementById('roleSum'), panel=document.getElementById('rolePanel');
+
+  ROLES.forEach(function(r){
+    var l=document.createElement('label'); l.className='opt';
+    var c=document.createElement('input'); c.type='checkbox'; c.value=r;
+    l.appendChild(c); l.appendChild(document.createTextNode(r)); panel.appendChild(l);
+  });
+  var boxes=[].slice.call(panel.querySelectorAll('input'));
+
+  function val(id){return document.getElementById(id).value.trim()}
+  function picked(){return boxes.filter(function(b){return b.checked}).map(function(b){return b.value})}
+  function setBad(k,bad){var el=f.querySelector('[data-f="'+k+'"]'); if(el) el.classList.toggle('bad',bad)}
+
+  var rules={
+    realName:function(){return val('realName').length>=2},
+    ign:function(){return val('ign').length>=1},
+    uid:function(){return /^\d{8,14}$/.test(val('uid'))},
+    age:function(){var n=Number(val('age'));return val('age')!==''&&Number.isInteger(n)&&n>=5&&n<=60},
+    team:function(){return val('team')!==''},
+    role:function(){var n=picked().length;return n>=1&&n<=MAX},
+    igl:function(){return val('igl').length>=1},
+    whatsapp:function(){var w=val('whatsapp').replace(/[\s-]/g,'');return /^(\+?91)?[6-9]\d{9}$/.test(w)||/^\+\d{10,14}$/.test(w)},
+    insta:function(){return val('insta').length>=2},
+    discord:function(){return val('discord').length>=2}
+  };
+  var keys=Object.keys(rules);
+
+  function progress(){
+    var n=keys.filter(function(k){return rules[k]()}).length;
+    document.getElementById('count').textContent=n+' of '+keys.length;
+    document.getElementById('bar').style.width=(n/keys.length*100)+'%';
+  }
+
+  function refreshRoles(){
+    var p=picked();
+    boxes.forEach(function(b){var off=!b.checked&&p.length>=MAX;b.disabled=off;b.parentNode.classList.toggle('off',off)});
+    sum.textContent='';
+    if(!p.length){var s=document.createElement('span');s.className='ph';s.textContent='Select up to 2';sum.appendChild(s)}
+    p.forEach(function(r){var c=document.createElement('span');c.className='chip';c.textContent=r;sum.appendChild(c)});
+    if(p.length) setBad('role',false);
+    progress();
+  }
+  boxes.forEach(function(b){b.addEventListener('change',refreshRoles)});
+  document.addEventListener('click',function(e){if(!box.contains(e.target)) box.open=false});
+  box.addEventListener('keydown',function(e){if(e.key==='Escape'){box.open=false;sum.focus()}});
+  box.addEventListener('toggle',function(){if(!box.open&&picked().length===0&&box.dataset.used) setBad('role',true); box.dataset.used=1});
+
+  keys.forEach(function(k){
+    var el=document.getElementById(k); if(!el) return;
+    el.addEventListener('input',function(){setBad(k,false);progress()});
+    el.addEventListener('change',function(){setBad(k,false);progress()});
+    el.addEventListener('blur',function(){if(el.value.trim()!=='') setBad(k,!rules[k]())});
+  });
+
+  f.addEventListener('submit',function(e){
+    e.preventDefault(); st.textContent='';
+    var first=null;
+    keys.forEach(function(k){var ok=rules[k](); setBad(k,!ok); if(!ok&&!first) first=k});
+    if(first){
+      f.querySelector('[data-f="'+first+'"]').scrollIntoView({behavior:'smooth',block:'center'});
+      st.textContent='Some fields need fixing. They are marked above.';
+      return;
+    }
+    var data={realName:val('realName'),ign:val('ign'),uid:val('uid'),age:val('age'),team:val('team'),roles:picked(),igl:val('igl'),whatsapp:val('whatsapp'),insta:val('insta'),discord:val('discord'),website:f.elements['website'].value};
+    btn.disabled=true; btn.textContent='Sending...';
+    fetch('/api/submit',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)})
+      .then(function(r){return r.json().catch(function(){return {}}).then(function(j){return {ok:r.ok,j:j}})})
+      .then(function(x){
+        if(!(x.ok&&x.j.ok)) throw new Error('failed');
+        var rows=[['Name',data.realName],['In-game name',data.ign],['UID',data.uid],['Team',data.team],['Role',data.roles.join(', ')]];
+        var dl=document.getElementById('recap');
+        rows.forEach(function(r){var d=document.createElement('div'),t=document.createElement('dt'),v=document.createElement('dd');t.textContent=r[0];v.textContent=r[1];d.appendChild(t);d.appendChild(v);dl.appendChild(d)});
+        document.body.classList.add('sent'); window.scrollTo(0,0);
+      })
+      .catch(function(){
+        st.textContent='The form was not sent. Check your internet, then press Send trials form again.';
+        btn.disabled=false; btn.textContent='Send trials form';
+      });
+  });
+  progress();
+})();
+</script>
+</body>
+</html>
