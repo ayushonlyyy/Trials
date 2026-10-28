@@ -7,6 +7,7 @@
 <meta name="description" content="Free Fire player trials form for BONTEN eSports, an esports organisation.">
 <title>Trials Form | BONTEN eSports</title>
 <link rel="icon" href="logo.png">
+<link rel="preload" as="image" href="logo.png" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
@@ -22,7 +23,8 @@ body{margin:0;background:#000;color:#fff;font:400 16px/1.55 'Barlow',system-ui,-
 @keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
 
 .head{text-align:center;margin-bottom:38px}
-.logo{display:block;width:min(240px,64vw);max-height:240px;object-fit:contain;margin:0 auto 22px}
+.logo{display:block;width:min(240px,64vw);height:min(210px,56vw);object-fit:contain;margin:0 auto 22px;opacity:0;transform:scale(.96)}
+.logo.in{opacity:1;transform:none;transition:opacity .6s var(--ease),transform .6s var(--ease)}
 h1{margin:0 0 12px;font:700 clamp(42px,12vw,58px)/1 'Barlow Condensed','Arial Narrow',sans-serif;letter-spacing:.01em}
 .lead{margin:0 auto;max-width:38ch;color:var(--mut)}
 
@@ -94,7 +96,7 @@ body.sent .done{display:block}
 <body>
 <div class="page">
   <header class="head">
-    <img class="logo rv" style="--i:0" src="logo.png" alt="BONTEN eSports logo" onerror="this.remove()">
+    <img class="logo" src="logo.png" alt="BONTEN eSports logo" fetchpriority="high" decoding="async" onload="this.classList.add('in')" onerror="this.remove()">
     <h1 class="rv" style="--i:1">Trials Form</h1>
     <p class="lead rv" style="--i:2">Free Fire player trials. BONTEN eSports is an organisation, not a single team, so select the team you were placed in.</p>
   </header>
@@ -187,6 +189,7 @@ body.sent .done{display:block}
 (function(){
   var ROLES=['Primary Rusher','Secondary Rusher','IGL (In-Game Leader)','Sniper','Support','Nader (Grenadier)','Flanker','Fragger','Assaulter','Scout','Anchor','Flex Player'];
   var MAX=2;
+  var lg=document.querySelector('.logo'); if(lg&&lg.complete&&lg.naturalWidth) lg.classList.add('in');
   var f=document.getElementById('f'), btn=document.getElementById('btn'), st=document.getElementById('status');
   var box=document.getElementById('roleBox'), sum=document.getElementById('roleSum'), panel=document.getElementById('rolePanel');
 
