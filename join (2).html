@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="Team join form for BONTEN eSports, a Free Fire esports organisation.">
+<title>Team Join Form | BONTEN eSports</title>
+<link rel="icon" href="logo.png">
+<link rel="preload" as="image" href="logo.png" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+  <header class="head">
+    <img class="logo" src="logo.png" alt="BONTEN eSports logo" fetchpriority="high" decoding="async" onerror="this.remove()">
+    <h1>Team Join Form</h1>
+    <p class="lead">You join a team first. After the trials, selected players are placed into BONTEN eSports organisation teams. BONTEN eSports is an organisation, not a single team.</p>
+  </header>
+  <div class="prog" id="prog"></div>
+  <form id="f" novalidate>
+    <div id="stage"></div>
+    <input class="hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="nav" id="nav"></div>
+    <p class="status" id="st" role="status" aria-live="polite"></p>
+  </form>
+  <div class="done" id="done"></div>
+  <footer class="foot">BONTEN eSports is an esports organisation.</footer>
+</div>
+<script>
+window.FORM={id:'join',endpoint:'/api/join',send:'Send form',mod:true,doneText:'Your team join form has reached BONTEN eSports.',
+steps:[
+{title:'Player',fields:[
+ {k:'realName',l:'Real name',t:'text',ph:'Full name',max:60,ac:'name',m:'Enter your real name.',v:function(v){return String(v||'').trim().length>=2}},
+ {k:'ign',l:'In-game name',t:'text',ph:'Name in Free Fire',max:40,m:'Enter your in-game name.'},
+ {k:'uid',l:'UID',t:'text',im:'numeric',ph:'Numbers only',max:14,m:'UID is 8 to 14 digits, numbers only.',v:function(v){return /^\d{8,14}$/.test(String(v||'').trim())}},
+ {k:'age',l:'Age',t:'number',im:'numeric',ph:'Years',max:3,m:'Enter a valid age.',v:function(v){var n=Number(v);return String(v||'')!==''&&Number.isInteger(n)&&n>=5&&n<=60}},
+ {k:'device',l:'Device',t:'text',ph:'Phone or device model',max:60,m:'Enter the device you play on.',v:function(v){return String(v||'').trim().length>=2}},
+ {k:'ram',l:'Device RAM',t:'select',opts:['4 GB','6 GB','8 GB','12 GB'],m:'Select your device RAM.'}
+]},
+{title:'Team and role',fields:[
+ {k:'team',l:'Team',hint:'(optional)',opt:1,note:'If our organisation has added you to a group, find your team by that group name and select it. If you have not been added to any group, skip this.',t:'select',opts:['Team 1','Team 2','Team 3','Team 4','Team 5','Team 6','Team 7','Team 8','Team 9','Team 10']},
+ {k:'roles',l:'Role',hint:'(select up to 2)',t:'roles',m:'Select 1 or 2 roles.',v:function(v){return Array.isArray(v)&&v.length>=1&&v.length<=2}}
+]},
+{title:'Experience',fields:[
+ {k:'gameExp',l:'Game experience',hint:'(how long you have played Free Fire)',t:'select',opts:['Less than 1 year','1 year','2 years','3 years','4 years','5 years','6+ years'],m:'Select your game experience.'},
+ {k:'esportsExp',l:'eSports experience',hint:'(competitive or tournament play)',t:'select',opts:['No experience','Less than 1 year','1 year','2 years','3 years','4+ years'],m:'Select your eSports experience.'}
+]},
+{title:'Contact',fields:[
+ {k:'whatsapp',l:'WhatsApp number',t:'tel',im:'tel',ph:'10 digit number',max:16,ac:'tel',m:'Enter a valid WhatsApp number.',v:function(v){var w=String(v||'').replace(/[\s-]/g,'');return /^(\+?91)?[6-9]\d{9}$/.test(w)||/^\+\d{10,14}$/.test(w)}},
+ {k:'insta',l:'Instagram id',t:'text',ph:'@username',max:40,cap:1,m:'Enter your Instagram id.',v:function(v){return String(v||'').trim().length>=2}},
+ {k:'discord',l:'Discord id',t:'text',ph:'username',max:40,cap:1,m:'Enter your Discord id.',v:function(v){return String(v||'').trim().length>=2}}
+]},
+{title:'Confirmation',fields:[
+ {k:'ageVerified',l:'Have you verified your age?',t:'seg',opts:['Yes','No'],m:'Select Yes or No.'},
+ {k:'ageDoc',l:'Which ID did you use to verify your age?',t:'seg',opts:['School/College ID','Aadhaar card'],m:'Select one option.',show:function(s){return s.ageVerified==='Yes'}},
+ {t:'note',text:'Verification is done with our moderator. After you send this form, contact them and share only your date of birth from your school/college ID or Aadhaar card. Hide all other details.',show:function(s){return s.ageVerified==='No'}},
+ {k:'agree',t:'check',l:'I understand that if I am selected in a team and I disrespect any player, BONTEN eSports can remove me from the organisation.',m:'Tick this to continue.',v:function(v){return v===true}}
+]}
+]};
+</script>
+<script src="form.js"></script>
+</body>
+</html>
