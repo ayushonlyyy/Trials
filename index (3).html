@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="Free Fire player trials form for BONTEN eSports, an esports organisation.">
+<title>Trials Form | BONTEN eSports</title>
+<link rel="icon" href="logo.png">
+<link rel="preload" as="image" href="logo.png" fetchpriority="high">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="page">
+  <header class="head">
+    <img class="logo" src="logo.png" alt="BONTEN eSports logo" fetchpriority="high" decoding="async" onerror="this.remove()">
+    <h1>Trials Form</h1>
+    <p class="lead">Free Fire player trials. BONTEN eSports is an organisation, not a single team, so select the team you were placed in.</p>
+  </header>
+  <div class="prog" id="prog"></div>
+  <form id="f" novalidate>
+    <div id="stage"></div>
+    <input class="hp" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div class="nav" id="nav"></div>
+    <p class="status" id="st" role="status" aria-live="polite"></p>
+  </form>
+  <div class="done" id="done"></div>
+  <footer class="foot">BONTEN eSports is an esports organisation.</footer>
+</div>
+<script>
+window.FORM={id:'trials',endpoint:'/api/submit',send:'Send trials form',doneText:'Your trials form has reached BONTEN eSports. We will contact you on WhatsApp.',
+steps:[
+{title:'Player',fields:[
+ {k:'realName',l:'Real name',t:'text',ph:'Full name',max:60,ac:'name',m:'Enter your real name.',v:function(v){return String(v||'').trim().length>=2}},
+ {k:'ign',l:'In-game name',t:'text',ph:'Name in Free Fire',max:40,m:'Enter your in-game name.'},
+ {k:'uid',l:'UID',t:'text',im:'numeric',ph:'Numbers only',max:14,m:'UID is 8 to 14 digits, numbers only.',v:function(v){return /^\d{8,14}$/.test(String(v||'').trim())}},
+ {k:'age',l:'Age',t:'number',im:'numeric',ph:'Years',max:3,m:'Enter a valid age.',v:function(v){var n=Number(v);return String(v||'')!==''&&Number.isInteger(n)&&n>=5&&n<=60}}
+]},
+{title:'Team and role',fields:[
+ {k:'team',l:'Team',hint:'(a team inside BONTEN eSports)',t:'select',opts:['Team 1','Team 2','Team 3','Team 4','Team 5','Team 6','Team 7','Team 8','Team 9','Team 10'],m:'Select your team.'},
+ {k:'roles',l:'Role',hint:'(select up to 2)',t:'roles',m:'Select 1 or 2 roles.',v:function(v){return Array.isArray(v)&&v.length>=1&&v.length<=2}},
+ {k:'igl',l:'IGL name',t:'text',ph:'Your in-game leader',max:40,m:'Enter your IGL name.'}
+]},
+{title:'Contact',fields:[
+ {k:'whatsapp',l:'WhatsApp number',t:'tel',im:'tel',ph:'10 digit number',max:16,ac:'tel',m:'Enter a valid WhatsApp number.',v:function(v){var w=String(v||'').replace(/[\s-]/g,'');return /^(\+?91)?[6-9]\d{9}$/.test(w)||/^\+\d{10,14}$/.test(w)}},
+ {k:'insta',l:'Instagram id',t:'text',ph:'@username',max:40,cap:1,m:'Enter your Instagram id.',v:function(v){return String(v||'').trim().length>=2}},
+ {k:'discord',l:'Discord id',t:'text',ph:'username',max:40,cap:1,m:'Enter your Discord id.',v:function(v){return String(v||'').trim().length>=2}}
+]}
+]};
+</script>
+<script src="form.js"></script>
+</body>
+</html>
